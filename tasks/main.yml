@@ -1,0 +1,29 @@
+---
+
+- name: Download GitKraken
+  unarchive:
+    src: https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
+    dest: /opt
+    owner: root
+    group: root
+    creates: /opt/gitkraken/gitkraken
+    remote_src: yes
+  become: yes
+
+- name: Add application icon
+  copy:
+    src: icon.png
+    dest: /opt/gitkraken/icon.png
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+
+- name: Create application shortcut
+  copy:
+    src: gitkraken.desktop
+    dest: /usr/share/applications/gitkraken.desktop
+    owner: root
+    group: root
+    mode: 0644
+  become: yes

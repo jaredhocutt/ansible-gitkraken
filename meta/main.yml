@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Jared Hocutt
+  description: Installs GitKraken.
+
+  license: BSD
+
+  min_ansible_version: 1.9
+
+  platforms:
+  - name: Fedora
+    versions:
+    - 27
