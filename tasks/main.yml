@@ -27,3 +27,12 @@
     group: root
     mode: 0644
   become: yes
+
+- name: Create symlink to libcurl.so.4
+  file:
+    src: /usr/lib64/libcurl.so.4
+    dest: /opt/gitkraken/libcurl-gnutls.so.4
+    owner: root
+    group: root
+    state: link
+  become: yes
