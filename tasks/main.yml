@@ -1,38 +1,13 @@
 ---
 
-- name: Download GitKraken
-  unarchive:
-    src: https://release.gitkraken.com/linux/gitkraken-amd64.tar.gz
-    dest: /opt
-    owner: root
-    group: root
-    creates: /opt/gitkraken/gitkraken
-    remote_src: yes
-  become: yes
+- name: Check if GitKraken is already installed
+  stat:
+    path: /usr/bin/gitkraken
+  register: r_gitkraken_check_installed
 
-- name: Add application icon
-  copy:
-    src: icon.png
-    dest: /opt/gitkraken/icon.png
-    owner: root
-    group: root
-    mode: 0644
+- name: Install GitKraken
+  dnf:
+    name: https://release.axocdn.com/linux/gitkraken-amd64.rpm
+    state: present
   become: yes
-
-- name: Create application shortcut
-  copy:
-    src: gitkraken.desktop
-    dest: /usr/share/applications/gitkraken.desktop
-    owner: root
-    group: root
-    mode: 0644
-  become: yes
-
-- name: Create symlink to libcurl.so.4
-  file:
-    src: /usr/lib64/libcurl.so.4
-    dest: /usr/lib64/libcurl-gnutls.so.4
-    owner: root
-    group: root
-    state: link
-  become: yes
+  when: not r_gitkraken_check_installed.stat.exists
